@@ -12,6 +12,10 @@ from nkb import get_race_id_list, RaceDataLoader, PayoffDataLoader
 import pathlib
 import os
 
+from prefect.filesystems import GitHub
+
+github_block = GitHub.load("github-repo")
+
 @task
 def get_mongo_url():
   cred_file = open(os.path.join(str(pathlib.home()), '.config/.mongo_credential.json')) 

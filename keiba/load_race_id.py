@@ -14,6 +14,9 @@ from pymongo import MongoClient
 from pathlib import Path
 import os
 
+from prefect.filesystems import GitHub
+
+github_block = GitHub.load("github-repo")
 
 @task
 def get_mongo_url():
