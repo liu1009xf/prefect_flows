@@ -9,7 +9,6 @@ from pymongo import MongoClient
 from pathlib import Path
 from nkb import get_race_id_list, RaceDataLoader, PayoffDataLoader
 
-import pathlib
 import os
 
 from prefect.filesystems import GitHub
@@ -18,7 +17,7 @@ github_block = GitHub.load("github-repo")
 
 @task
 def get_mongo_url():
-  cred_file = open(os.path.join(str(pathlib.home()), '.config/.mongo_credential.json')) 
+  cred_file = open(os.path.join(str(Path.home()), '.config/.mongo_credential.json')) 
   mongo_cred = json.load(cred_file)
   cred_file.close()
   url = f"mongodb+srv://{mongo_cred['user']}:{mongo_cred['pw']}@horse.wqv7atq.mongodb.net/?retryWrites=true&w=majority"
