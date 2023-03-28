@@ -27,7 +27,6 @@ def get_mongo_url():
 def read_race_id_list_from_date(date, client):
     db = client['horseRaceJP']
     collection = db['raceId']
-    client.close()
     return pd.DataFrame(list(collection.find({'date':{'$eq':date.strftime('%Y-%m-%d')}})))
     
 @task
@@ -49,6 +48,7 @@ def load_race_data(date:dt.date = dt.datetime.now().date()):
       logger.info(f'loading race data for date: {date}')
       for id in raceIds:
         load_race_horse_data(id, client)
+    client.close()
     logger.info(f'done')
 
 def deploy():
