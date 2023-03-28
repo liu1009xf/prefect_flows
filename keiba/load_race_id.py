@@ -65,6 +65,7 @@ def load_race_id(date:dt.date = dt.datetime.now().date()):
       insertIntoMongoDB(date, raceIds, client)
     else:
         logger.info('No race for {date}')
+    client.close()
     logger.info(f'done')
 
 def deploy():
