@@ -64,4 +64,5 @@ def load_race_data(date:dt.date = dt.datetime.now().date()):
 #     deployment.apply()
 
 # if __name__ == "__main__":
-#     load_race_data(date=dt.date(2023,3,11))
+    # load_race_data(date=dt.date(2023,3,11))
+    # RaceDataLoader(202306020501).data
