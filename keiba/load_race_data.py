@@ -1,5 +1,5 @@
 import json
-from prefect import flow, get_run_logger, task
+from prefect import flow, get_run_logger, task, unmapped
 import requests
 from bs4 import BeautifulSoup as bs
 import datetime as dt
@@ -24,39 +24,44 @@ def get_mongo_url():
   return url
 
 @task
-def read_race_id_list_from_date(date, client):
+def read_race_id_list_from_date(date, url):
+    client = MongoClient(url)
     db = client['horseRaceJP']
     collection = db['raceId']
-    return pd.DataFrame(list(collection.find({'date':{'$eq':date.strftime('%Y-%m-%d')}})))
+    res = pd.DataFrame(
+       list(collection.find({'date':{'$eq':date.strftime('%Y-%m-%d')}}))
+       )['raceId'].tolist()
+    client.close()
+    return res
     
 @task
-def load_race_horse_data(id, client):
+def load_race_horse_data(id, url):
+    client = MongoClient(url)
     db = client['horseRaceJP']
     RaceDataLoader(id).save(db)
+    client.close()
 
 @flow(name="Load Race data")
 def load_race_data(date:dt.date = dt.datetime.now().date()):
     logger = get_run_logger()
     logger.info(f'create mongo client')
     url = get_mongo_url()
-    client = MongoClient(url)
     logger.info(f'loading race id for date: {date}')
-    raceIds = read_race_id_list_from_date(date, client)
-    if raceIds.empty:
-       logger.info('no race on {date}')
+    raceIds = read_race_id_list_from_date(date, url)
+    logger.info(raceIds)
+    if len(raceIds) ==0:
+      logger.info('no race on {date}')
     else:
       logger.info(f'loading race data for date: {date}')
-      for id in raceIds:
-        load_race_horse_data(id, client)
-    client.close()
+      load_race_horse_data.map(raceIds, unmapped(url))
     logger.info(f'done')
 
-def deploy():
-    deployment = Deployment.build_from_flow(
-        flow=load_race_data,
-        name="load-race-data"
-    )
-    deployment.apply()
+# def deploy():
+#     deployment = Deployment.build_from_flow(
+#         flow=load_race_data,
+#         name="load-race-data"
+#     )
+#     deployment.apply()
 
-if __name__ == "__main__":
-    deploy()
+# if __name__ == "__main__":
+#     load_race_data(date=dt.date(2023,3,11))
