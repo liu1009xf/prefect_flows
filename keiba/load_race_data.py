@@ -44,7 +44,7 @@ def load_race_horse_data(ids, mongourl):
       time.sleep(0.1)
     client.close()
 
-@flow(name="Load Race data", flow_run_name="{name}-on-{date:%Y%m%d%H%M.%S}")
+@flow(name="Load Race data")
 def load_race_data(date:dt.date = dt.datetime.now().date()):
     logger = get_run_logger()
     logger.info(f'create mongo client')
