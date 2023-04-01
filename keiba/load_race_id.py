@@ -63,9 +63,9 @@ def load_race_id(date:dt.date = dt.datetime.now().date()):
       client = MongoClient(url)
       logger.info(f'writing race id into mongo db')
       insertIntoMongoDB(date, raceIds, client)
+      client.close()
     else:
-        logger.info('No race for {date}')
-    client.close()
+        logger.info(f'No race for {date}')
     logger.info(f'done')
 
 # def deploy():
