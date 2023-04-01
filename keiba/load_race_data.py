@@ -30,9 +30,8 @@ def read_race_id_list_from_date(date, mongourl):
     db = client['horseRaceJP']
     collection = db['raceId']
     res = list(collection.find({'date':{'$eq':date.strftime('%Y-%m-%d')}}))
-    if len(res) == 0:
-      return []
-    res = pd.DataFrame(res)['raceId'].tolist()
+    if len(res) != 0:
+      res = pd.DataFrame(res)['raceId'].tolist()
     client.close()
     return res
     
