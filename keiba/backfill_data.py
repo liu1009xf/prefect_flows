@@ -4,7 +4,7 @@ from datetime import date, timedelta
 
 
 @flow(name="Back Fill")
-def backfillRaceId(startdate=None, enddate=None):
+def backfillRaceId(startdate:dt.date=dt.datetime.now().date(), enddate:dt.date=dt.datetime.now().date()):
     delta = enddate - startdate   # returns timedelta
 
     for i in range(delta.days + 1):
