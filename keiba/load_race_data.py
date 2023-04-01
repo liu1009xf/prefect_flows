@@ -44,14 +44,12 @@ def load_race_horse_data(ids, mongourl):
       time.sleep(0.1)
     client.close()
 
-@flow(name="Load Race data")
+@flow(name="Load Race data", flow_run_name="{name}-on-{date:%Y%m%d%H%M.%S}")
 def load_race_data(date:dt.date = dt.datetime.now().date()):
     logger = get_run_logger()
     logger.info(f'create mongo client')
     url = get_mongo_url()
     logger.info(f'loading race id for date: {date}')
-    raceIds = read_race_id_list_from_date(date, url)
-    logger.info(raceIds)
     if len(raceIds) ==0:
       logger.info('no race on {date}')
     else:

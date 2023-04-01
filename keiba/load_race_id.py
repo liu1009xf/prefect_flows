@@ -68,12 +68,12 @@ def load_race_id(date:dt.date = dt.datetime.now().date()):
     client.close()
     logger.info(f'done')
 
-def deploy():
-    deployment = Deployment.build_from_flow(
-        flow=load_race_id,
-        name="load-race-id"
-    )
-    deployment.apply()
+# def deploy():
+#     deployment = Deployment.build_from_flow(
+#         flow=load_race_id,
+#         name="load-race-id"
+#     )
+#     deployment.apply()
 
-if __name__ == "__main__":
-    deploy()
+# if __name__ == "__main__":
+#     deploy()
