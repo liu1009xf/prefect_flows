@@ -8,6 +8,7 @@ from prefect.deployments import Deployment
 from pymongo import MongoClient
 from pathlib import Path
 from nkb import get_race_id_list, RaceDataLoader, PayoffDataLoader
+import time
 
 import os
 
@@ -24,8 +25,8 @@ def get_mongo_url():
   return url
 
 @task
-def read_race_id_list_from_date(date, url):
-    client = MongoClient(url)
+def read_race_id_list_from_date(date, mongourl):
+    client = MongoClient(mongourl)
     db = client['horseRaceJP']
     collection = db['raceId']
     res = pd.DataFrame(
@@ -35,10 +36,12 @@ def read_race_id_list_from_date(date, url):
     return res
     
 @task
-def load_race_horse_data(id, url):
-    client = MongoClient(url)
+def load_race_horse_data(ids, mongourl):
+    client = MongoClient(mongourl)
     db = client['horseRaceJP']
-    RaceDataLoader(id).save(db)
+    for id in ids:
+      RaceDataLoader(id).save(db)
+      time.sleep(0.1)
     client.close()
 
 @flow(name="Load Race data")
@@ -53,7 +56,7 @@ def load_race_data(date:dt.date = dt.datetime.now().date()):
       logger.info('no race on {date}')
     else:
       logger.info(f'loading race data for date: {date}')
-      load_race_horse_data.map(raceIds, unmapped(url))
+      load_race_horse_data(raceIds, url)
     logger.info(f'done')
 
 # def deploy():
@@ -64,5 +67,5 @@ def load_race_data(date:dt.date = dt.datetime.now().date()):
 #     deployment.apply()
 
 # if __name__ == "__main__":
-    # load_race_data(date=dt.date(2023,3,11))
+#     load_race_data(date=dt.date(2023,3,11))
     # RaceDataLoader(202306020501).data
