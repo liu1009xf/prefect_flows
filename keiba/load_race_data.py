@@ -50,6 +50,7 @@ def load_race_data(date:dt.date = dt.datetime.now().date()):
     logger.info(f'create mongo client')
     url = get_mongo_url()
     logger.info(f'loading race id for date: {date}')
+    raceIds = read_race_id_list_from_date(date, url)
     if len(raceIds) ==0:
       logger.info('no race on {date}')
     else:
