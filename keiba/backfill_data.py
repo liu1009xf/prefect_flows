@@ -3,7 +3,7 @@ from .load_race_id import load_race_id
 from datetime import date, timedelta
 
 
-@flow
+@flow(name="Back Fill")
 def backfillRaceId(startdate=None, enddate=None):
     delta = enddate - startdate   # returns timedelta
 
