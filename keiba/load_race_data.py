@@ -16,7 +16,6 @@ from prefect.filesystems import GitHub
 
 github_block = GitHub.load("github-repo")
 
-@task
 def get_mongo_url():
   cred_file = open(os.path.join(str(Path.home()), '.config/.mongo_credential.json')) 
   mongo_cred = json.load(cred_file)
