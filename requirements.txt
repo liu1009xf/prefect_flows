@@ -3,3 +3,4 @@ abt@ git+https://github.com/liu1009xf/abt@main
 pymongo==3.12.0
 bs4==0.0.1
 pandas==1.5.3
+webdriver-manager==3.8.6
