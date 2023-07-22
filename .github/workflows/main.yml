@@ -27,6 +27,6 @@ jobs:
     # - name: set backEnd to client
     #   run: prefect backend cloud
     - name: Authenticate to Prefect dependencies
-      run: prefect cloud login -k $KEY
+      run: prefect cloud login -k $KEY --workspace jphorseracing
     - name: Register flow
       run: deploy
