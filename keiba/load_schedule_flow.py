@@ -51,7 +51,8 @@ def get_race_schedule():
 def deploy():
     deployment = Deployment.build_from_flow(
         flow=get_race_schedule,
-        name="get-race-schedule"
+        name="get-race-schedule",
+        storage = github_block,
     )
     deployment.apply()
 

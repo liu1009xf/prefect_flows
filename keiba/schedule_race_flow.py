@@ -14,7 +14,7 @@ import pandas as pd
 
 import abt
 
-github_block = GitHub.load("github-repo")
+github_block = GitHub.load("https://github.com/liu1009xf/prefect_flows")
 
 
 def get_mongo_url():
@@ -89,7 +89,8 @@ def schedule_race(deployment_name:str='run-strategy/run_strategy'):
 def deploy():
     deployment = Deployment.build_from_flow(
         flow=schedule_race,
-        name="schedule_race"
+        name="schedule_race",
+        storage = github_block,
     )
     deployment.apply()
 

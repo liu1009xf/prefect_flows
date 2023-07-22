@@ -9,7 +9,7 @@ slack_webhook_block = SlackWebhook.load("abet")
 
 # email_credentials_block = EmailServerCredentials.load("xlatombet")
 
-github_block = GitHub.load("github-repo")
+github_block = GitHub.load("https://github.com/liu1009xf/prefect_flows")
 
 
 import abt
@@ -48,7 +48,8 @@ def run_strategy(name:str, jraurl:str, nkburl:str):
 def deploy():
     deployment = Deployment.build_from_flow(
         flow=run_strategy,
-        name="run_strategy"
+        name="run_strategy",
+        storage = github_block,
     )
     deployment.apply()
 
