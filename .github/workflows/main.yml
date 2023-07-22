@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container: prefecthq/prefect:2-python3.10-conda
+    container: prefecthq/prefect
     env: 
       KEY: ${{secrets.PREFECT_API_KEY}}
     steps:
@@ -16,8 +16,8 @@ jobs:
         # requirements: requirements.txt
     - name: Show options
       run: prefect -h
-    - name: set backEnd to client
-      run: prefect backend cloud
+    # - name: set backEnd to client
+    #   run: prefect backend cloud
     - name: Authenticate to Prefect dependencies
       run: prefect cloud login -k $KEY
     - name: Register flow
