@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container: prefecthq/prefect:latest
+    container: prefecthq/prefect:2-python3.10-conda
     env: 
       KEY: ${{secrets.PREFECT_API_KEY}}
     steps:
