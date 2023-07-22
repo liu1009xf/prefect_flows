@@ -30,4 +30,4 @@ jobs:
     - name: Authenticate to Prefect dependencies
       run: prefect cloud login -k $KEY --workspace $WORKSPACE
     - name: Register flow
-      run: deploy
+      run: ./deploy
