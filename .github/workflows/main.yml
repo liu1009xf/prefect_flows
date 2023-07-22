@@ -17,6 +17,6 @@ jobs:
     - name: Show options
       run: prefect -h
     - name: Authenticate to Prefect dependencies
-      run: prefect cloud login -k $KEY
+      run: prefect auth login -k $KEY
     - name: Register flow
       run: deploy
