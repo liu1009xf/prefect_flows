@@ -10,3 +10,10 @@ Custom flows are defined here. Use Prefect cloud as orchestrate and use local ma
 
 # deploy flows in example_flow.py
 python example_flow.py
+
+# require agent installing 
+- pandas
+- numpy
+- abt
+- prefect
+- prefect-email

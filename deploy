@@ -1,0 +1,10 @@
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+flows="$(find ${SCRIPTPATH} -type f -name "*_flow.py")"
+
+for flow in $flows; do
+    echo "Deploying ${flow}"
+    python ${flow}
+    echo "Finished ${flow}"
+done

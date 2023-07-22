@@ -49,7 +49,7 @@ def get_schedule(date:str) -> pd.DataFrame:
 #     return next_race
 
 @task
-def register_flows(data:pd.DataFrame, deployment_name:str = 'run-strategy/run_strategy') -> None:
+def register_flows(data:pd.DataFrame, deployment_name:str = 'run_strategy/run_strategy') -> None:
     logger = get_run_logger()
     jst = tzinfo=dt.timezone(dt.timedelta(hours=9))
     timeFunc = lambda x: dt.datetime.strptime(x['date'], '%Y%m%d').replace(hour=x["startHour"],
