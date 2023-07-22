@@ -16,7 +16,9 @@ jobs:
         # requirements: requirements.txt
     - name: Show options
       run: prefect -h
+    - name: set backEnd to client
+      run: prefect backend cloud
     - name: Authenticate to Prefect dependencies
-      run: prefect auth login -k $KEY
+      run: prefect cloud login -k $KEY
     - name: Register flow
       run: deploy
