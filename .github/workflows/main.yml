@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container: prefecthq/prefect
+    container: prefecthq/prefect:2-python3.10-conda
     env: 
       KEY: ${{secrets.PREFECT_API_KEY}}
     steps:
@@ -14,8 +14,8 @@ jobs:
     # - uses: BSFishy/pip-action@v1
       # with:
         # requirements: requirements.txt
-    - name: Show options
-      run: prefect -h
+    # - name: Show options
+    #   run: prefect -h
     # - name: set backEnd to client
     #   run: prefect backend cloud
     - name: Authenticate to Prefect dependencies
