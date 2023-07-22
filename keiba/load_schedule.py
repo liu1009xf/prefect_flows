@@ -1,18 +1,17 @@
 from prefect.deployments import Deployment
 from prefect import flow, get_run_logger, task
 from prefect.filesystems import GitHub
+from prefect.tasks import task_input_hash
 
 from pathlib import Path
 import os
 import json
 from pymongo import MongoClient
 import pymongo
+import datetime as dt
 
 import abt
 
-from logging import getLogger
-logger = getLogger(__name__)
-logger.info('__file__')
 
 github_block = GitHub.load("github-repo")
 
@@ -24,8 +23,9 @@ def get_mongo_url():
     url = f"mongodb+srv://{mongo_cred['user']}:{mongo_cred['pw']}@scheduler.gyvxeuz.mongodb.net/?retryWrites=true&w=majority"
     return url
 
-@task
+@task(cache_key_fn=task_input_hash, cache_expiration=dt.timedelta(hours=10))
 def load_schedule():
+    logger = get_run_logger()
     url = get_mongo_url()
     client = MongoClient(url)
     db = client['schedule']
@@ -41,6 +41,7 @@ def load_schedule():
         col.insert_many(data)
     except pymongo.errors.BulkWriteError as e: # type: ignore
         logger.warning('exists')
+    client.close()
       
 
 
