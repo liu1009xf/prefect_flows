@@ -18,3 +18,4 @@ jobs:
       run: prefect auth login -k $KEY
     - name: Register flow
       run: deploy
+      
