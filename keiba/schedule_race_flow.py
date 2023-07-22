@@ -14,8 +14,7 @@ import pandas as pd
 
 import abt
 
-github_block = GitHub.load("https://github.com/liu1009xf/prefect_flows")
-
+github_block = GitHub.load("github-repo")
 
 def get_mongo_url():
     cred_file = open(os.path.join(str(Path.home()), '.config/.mongo_credential.json')) 

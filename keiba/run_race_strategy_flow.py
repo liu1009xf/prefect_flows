@@ -9,7 +9,7 @@ slack_webhook_block = SlackWebhook.load("abet")
 
 # email_credentials_block = EmailServerCredentials.load("xlatombet")
 
-github_block = GitHub.load("https://github.com/liu1009xf/prefect_flows")
+github_block = GitHub.load("github-repo")
 
 
 import abt
