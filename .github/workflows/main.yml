@@ -13,6 +13,6 @@ jobs:
       # with:
         # requirements: requirements.txt
     - name: Authenticate to Prefect dependencies
-      run: prefect auth login -k ${{secrets.PREFECT_API_KEY}}
+      run: prefect cloud login -k ${{secrets.PREFECT_API_KEY}}
     - name: Register flow
       run: deploy
