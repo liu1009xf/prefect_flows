@@ -1,6 +1,7 @@
 from prefect.deployments import Deployment
 from prefect import flow, get_run_logger, task
 from prefect.filesystems import GitHub
+# from prefect_github.repository import GitHubRepository
 from prefect.tasks import task_input_hash
 
 from pathlib import Path
@@ -12,8 +13,9 @@ import datetime as dt
 
 import abt
 
-
 github_block = GitHub.load("github-repo")
+# github_block = GitHubRepository.load("github-repo")
+github_block.get_directory(local_path='keiba')
 
 def get_mongo_url():
     cred_file = open(os.path.join(str(Path.home()), '.config/.mongo_credential.json')) 

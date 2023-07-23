@@ -5,3 +5,4 @@ bs4==0.0.1
 pandas==1.5.3
 webdriver-manager==3.8.6
 selenium==4.10.0
+prefect-github==0.1.5
